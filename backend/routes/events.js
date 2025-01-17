@@ -1,7 +1,8 @@
 const eventRouter = require("express").Router();
+const eventController = require("../controllers/eventController");
 
 eventRouter.get("/", (req, res) => {
-  res.json({ msg: "Get method called" });
+  eventController.getAllEvents(req, res);
 });
 
 eventRouter.get("/:id", (req, res) => {
@@ -9,8 +10,7 @@ eventRouter.get("/:id", (req, res) => {
 });
 
 eventRouter.post("/", (req, res) => {
-  console.log(req.body);
-  res.json({ msg: "Post method called" });
+  eventController.createEvent(req, res);
 });
 
 eventRouter.delete("/:id", (req, res) => {
