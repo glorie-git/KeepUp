@@ -1,30 +1,29 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 const express = require("express");
 
 const PORT = process.env.PORT;
+const URI = process.env.MONGO_URI;
+const eventRouter = require("./routes/events");
 const app = express();
+
+// gives us access to request body
+app.use(express.json());
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-app.get("/", (req, res) => {
-  res.json({ msg: "Get method called" });
-});
+app.use("/api/events", eventRouter);
 
-app.post("/", (req, res) => {
-  res.json({ msg: "Post method called" });
-});
-
-app.delete("/", (req, res) => {
-  res.json({ msg: "Delete method called" });
-});
-
-app.patch("/", (req, res) => {
-  res.json({ msg: "Patch method called" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+mongoose
+  .connect(URI)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Connected to database & listening on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(`There was an issue connecting to database. Error: ${error}`);
+  });
