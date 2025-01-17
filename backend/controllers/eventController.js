@@ -14,12 +14,21 @@ const createEvent = async (req, res) => {
 
 // Delete an event
 
-// Get all events
-
 // Get an event
+const getEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Event.find({ _id: id });
+    res.status(200).json(event);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Get all events
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find({});
+    const events = await Event.find({}).sort({ createdAt: -1 });
     res.status(200).json(events);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -29,4 +38,5 @@ const getAllEvents = async (req, res) => {
 module.exports = {
   createEvent,
   getAllEvents,
+  getEvent,
 };

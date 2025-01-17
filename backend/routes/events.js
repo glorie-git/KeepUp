@@ -6,7 +6,7 @@ eventRouter.get("/", (req, res) => {
 });
 
 eventRouter.get("/:id", (req, res) => {
-  res.json({ msg: "Get method called" });
+  eventController.getEvent(req, res);
 });
 
 eventRouter.post("/", (req, res) => {
