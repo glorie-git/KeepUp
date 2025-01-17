@@ -3,9 +3,15 @@ const Event = require("../models/eventModel");
 
 // Create new event
 const createEvent = async (req, res) => {
-  const { title, date, time, tag } = req.body;
+  const { title, date, location, status, description } = req.body;
   try {
-    const event = await Event.create({ title, date, time, tag });
+    const event = await Event.create({
+      title,
+      date,
+      location,
+      status,
+      description,
+    });
     res.status(200).json(event);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -13,6 +19,15 @@ const createEvent = async (req, res) => {
 };
 
 // Delete an event
+const deleteEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Event.deleteOne({ _id: id });
+    res.status(200).json(event);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // Get an event
 const getEvent = async (req, res) => {
@@ -39,4 +54,5 @@ module.exports = {
   createEvent,
   getAllEvents,
   getEvent,
+  deleteEvent,
 };

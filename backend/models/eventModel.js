@@ -7,19 +7,26 @@ const eventSchema = new Schema(
     title: {
       required: true,
       type: String,
+      trim: true,
+    },
+    description: {
+      required: false,
+      type: String,
+      trim: true,
+    },
+    location: {
+      required: true,
+      type: String,
     },
     date: {
       required: true,
-      type: String,
-      // type: Date,
-      // min: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`,
+      type: Date,
     },
-    time: {
-      required: true,
+    status: {
       type: String,
-    },
-    tag: {
-      type: String,
+      required: false,
+      enum: ["active", "cancelled", "completed"],
+      default: "active",
     },
   },
   { timestamps: true }

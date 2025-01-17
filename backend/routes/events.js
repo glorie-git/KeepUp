@@ -14,7 +14,7 @@ eventRouter.post("/", (req, res) => {
 });
 
 eventRouter.delete("/:id", (req, res) => {
-  res.json({ msg: "Delete method called" });
+  eventController.deleteEvent(req, res);
 });
 
 eventRouter.patch("/:id", (req, res) => {
